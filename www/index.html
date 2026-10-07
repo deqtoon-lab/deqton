@@ -1,0 +1,1390 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="DEQTON">
+<meta name="theme-color" content="#050505">
+<title>DEQTON</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#050505;color:#fff;font-family:Arial,sans-serif;padding-bottom:80px}
+button,input,select{font:inherit}
+
+header{
+  height:65px;background:#090909;border-bottom:1px solid #222;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 20px;position:sticky;top:0;z-index:100
+}
+
+.logo{font-size:24px;font-weight:900;color:#e73535}
+.logo span{color:#fff}
+
+nav{display:flex;gap:18px}
+nav button{background:none;border:0;color:#aaa;cursor:pointer}
+nav button:hover{color:#fff}
+
+main{max-width:1200px;margin:auto;padding:20px}
+
+.hero{
+  min-height:330px;border-radius:16px;padding:35px;
+  display:flex;flex-direction:column;justify-content:flex-end;
+  background:linear-gradient(0deg,#050505,transparent),
+  linear-gradient(120deg,#421313,#090909);
+  margin-bottom:30px
+}
+
+.hero small{color:#e73535;font-weight:bold}
+.hero h1{font-size:45px;margin:8px 0}
+.hero p{color:#aaa}
+.hero button{
+  width:130px;margin-top:18px;padding:12px;border:0;
+  border-radius:7px;background:#e73535;color:#fff
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;margin-top:20px
+}
+
+.card{
+  background:#0b0b0b;border:1px solid #222;
+  border-radius:10px;overflow:hidden;cursor:pointer
+}
+
+.poster{
+  aspect-ratio:16/10;background:#151515;
+  display:flex;align-items:center;justify-content:center;
+  font-size:40px
+}
+
+.card-body{padding:12px}
+.card h3{font-size:14px}
+.card small{color:#777}
+
+.media-img{
+  width:100%;aspect-ratio:16/10;
+  object-fit:cover;background:#111
+}
+
+video,audio,iframe{
+  width:100%;
+}
+
+iframe{
+  aspect-ratio:16/9;
+  border:0;
+  background:#111
+}
+
+/* ADMIN */
+
+.admin{
+  display:grid;
+  grid-template-columns:250px 1fr;
+  gap:20px
+}
+
+.sidebar{
+  background:#0b0b0b;border:1px solid #222;
+  border-radius:12px;padding:10px;
+  align-self:start
+}
+
+.sidebar h3{padding:10px}
+
+.page-btn{
+  width:100%;padding:11px;border:0;
+  border-radius:7px;background:none;
+  color:#aaa;text-align:left;cursor:pointer
+}
+
+.page-btn:hover,.page-btn.active{
+  background:#191919;color:#fff;
+  border-left:3px solid #e73535
+}
+
+.workspace{
+  background:#0b0b0b;border:1px solid #222;
+  border-radius:12px;padding:20px
+}
+
+.back{
+  background:none;border:0;color:#e73535;
+  cursor:pointer;margin-bottom:15px
+}
+
+.admin-title{margin-bottom:20px}
+
+.tabs{
+  display:flex;gap:7px;
+  margin-bottom:15px;flex-wrap:wrap
+}
+
+.tabs button{
+  background:#151515;border:1px solid #333;
+  color:#aaa;padding:9px 13px;border-radius:7px;
+  cursor:pointer
+}
+
+.tabs button.active{
+  background:#e73535;color:#fff;border-color:#e73535
+}
+
+.form{
+  background:#080808;border:1px solid #222;
+  padding:15px;border-radius:9px;
+  display:grid;gap:10px;margin-bottom:25px
+}
+
+input,select{
+  width:100%;background:#050505;color:#fff;
+  border:1px solid #333;border-radius:7px;
+  padding:12px
+}
+
+.primary{
+  padding:12px;border:0;border-radius:7px;
+  background:#e73535;color:#fff;font-weight:bold;
+  cursor:pointer
+}
+
+.upload-label{
+  padding:12px;border:1px dashed #555;
+  border-radius:7px;text-align:center;
+  color:#ccc;cursor:pointer
+}
+
+.upload-label input{display:none}
+
+.item{
+  background:#101010;border:1px solid #252525;
+  border-radius:8px;padding:12px;
+  display:flex;align-items:center;
+  justify-content:space-between;
+  gap:10px;margin-bottom:8px
+}
+
+.item-info{
+  display:flex;gap:10px;
+  align-items:center;min-width:0
+}
+
+.item-info strong{
+  white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis
+}
+
+.actions{display:flex;gap:6px}
+
+.actions button{
+  background:#191919;color:#fff;
+  border:1px solid #333;border-radius:6px;
+  padding:7px 9px;cursor:pointer
+}
+
+.actions .delete{
+  background:#300d0d;
+  color:#ffaaaa;border-color:#5b1b1b
+}
+
+.empty{
+  padding:30px;text-align:center;
+  border:1px dashed #333;
+  border-radius:8px;color:#777
+}
+
+.bottom-nav{display:none}
+
+@media(max-width:700px){
+  main{padding:14px}
+  nav{display:none}
+  .hero{min-height:260px;padding:24px}
+  .hero h1{font-size:34px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+
+  .admin{grid-template-columns:1fr}
+
+  .sidebar{
+    display:flex;overflow-x:auto;
+    gap:5px
+  }
+
+  .sidebar h3{display:none}
+
+  .page-btn{min-width:120px}
+
+  .item{
+    flex-direction:column;
+    align-items:flex-start
+  }
+
+  .actions{width:100%}
+  .actions button{flex:1}
+
+  .bottom-nav{
+    position:fixed;bottom:0;left:0;right:0;
+    height:65px;background:#090909;
+    border-top:1px solid #222;
+    display:flex;justify-content:space-around;
+    z-index:200
+  }
+
+  .bottom-nav button{
+    background:none;border:0;color:#aaa;
+    font-size:11px
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">D<span>EQTON</span></div>
+
+  <nav>
+    <button onclick="openPage('home')">Home</button>
+    <button onclick="openPage('diinta')">Diinta</button>
+    <button onclick="openPage('waxbarasho')">Waxbarasho</button>
+    <button onclick="openPage('filimada')">Filimada</button>
+    <button onclick="openPage('shop')">Shop</button>
+    <button onclick="openAdmin()">Maamulka</button>
+  </nav>
+</header>
+
+<main id="app"></main>
+
+<div class="bottom-nav">
+  <button onclick="openPage('home')">🏠<br>Home</button>
+  <button onclick="openPage('diinta')">☪️<br>Diinta</button>
+  <button onclick="openPage('filimada')">🎬<br>Filimada</button>
+  <button onclick="openPage('shop')">🛍️<br>Shop</button>
+  <button onclick="openAdmin()">⚙️<br>Admin</button>
+</div>
+
+<script>
+
+const STORAGE_KEY = "deqton_v3";
+
+let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+  home:{
+    id:"home",
+    name:"Home",
+    children:[],
+    content:[]
+  },
+
+  diinta:{
+    id:"diinta",
+    name:"Diinta",
+    children:[
+      {id:"quran",name:"Qur'aanka",children:[],content:[]},
+      {id:"duco",name:"Ducooyin",children:[],content:[]}
+    ],
+    content:[]
+  },
+
+  waxbarasho:{
+    id:"waxbarasho",
+    name:"Waxbarasho",
+    children:[],
+    content:[]
+  },
+
+  filimada:{
+    id:"filimada",
+    name:"Filimada",
+    children:[
+      {id:"movies",name:"Movies",children:[],content:[]},
+      {id:"series",name:"Series",children:[],content:[]},
+      {id:"trending",name:"Trending",children:[],content:[]}
+    ],
+    content:[]
+  },
+
+  shop:{
+    id:"shop",
+    name:"Shop",
+    children:[],
+    content:[]
+  },
+
+  account:{
+    id:"account",
+    name:"Account",
+    children:[],
+    content:[]
+  }
+};
+
+function save(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(db));
+  }catch(e){
+    alert("Browser storage-ka wuu buuxsamay. Video weyn lama kaydin karo.");
+  }
+}
+
+function normalizePage(page){
+  if(!page.children) page.children=[];
+  if(!page.content) page.content=[];
+
+  page.children.forEach(normalizePage);
+}
+
+Object.values(db).forEach(normalizePage);
+
+function findPage(id){
+
+  function search(page){
+
+    if(page.id===id) return page;
+
+    for(const child of page.children){
+
+      const found=search(child);
+
+      if(found) return found;
+    }
+
+    return null;
+  }
+
+  for(const page of Object.values(db)){
+
+    const found=search(page);
+
+    if(found) return found;
+  }
+
+  return null;
+}
+
+function findParent(id){
+
+  function search(page){
+
+    for(const child of page.children){
+
+      if(child.id===id) return page;
+
+      const found=search(child);
+
+      if(found) return found;
+    }
+
+    return null;
+  }
+
+  for(const page of Object.values(db)){
+
+    const found=search(page);
+
+    if(found) return found;
+  }
+
+  return null;
+}
+
+/* ======================
+   PUBLIC PAGE
+====================== */
+
+function openPage(id){
+
+  const page=findPage(id);
+
+  if(!page) return;
+
+  const app=document.getElementById("app");
+
+  if(id==="home" &&
+     page.children.length===0 &&
+     page.content.length===0){
+
+    app.innerHTML=`
+      <section class="hero">
+        <small>DEQTON ORIGINAL</small>
+        <h1>SHEEKO CUSUB</h1>
+        <p>Filimo, Diin, Waxbarasho iyo adeegyo kala duwan.</p>
+        <button onclick="openPage('filimada')">▶ Daawo</button>
+      </section>
+
+      <h2>Ku soo dhowow DEQTON</h2>
+    `;
+
+    return;
+  }
+
+  let parent=findParent(id);
+
+  app.innerHTML=`
+
+    ${
+      parent
+      ? `<button class="back"
+          onclick="openPage('${parent.id}')">
+          ← ${escapeHTML(parent.name)}
+         </button>`
+      :""
+    }
+
+    <h1>${escapeHTML(page.name)}</h1>
+
+    <p style="color:#777;margin-top:5px">
+      DEQTON
+    </p>
+
+    ${
+      page.children.length
+      ? `
+        <h2 style="margin-top:25px">Pages</h2>
+
+        <div class="grid">
+          ${page.children.map(child=>`
+            <div class="card"
+                 onclick="openPage('${child.id}')">
+
+              <div class="poster">📁</div>
+
+              <div class="card-body">
+                <h3>${escapeHTML(child.name)}</h3>
+                <small>Fur</small>
+              </div>
+
+            </div>
+          `).join("")}
+        </div>
+      `
+      :""
+    }
+
+    ${
+      page.content.length
+      ? `
+        <h2 style="margin-top:30px">
+          Content
+        </h2>
+
+        <div class="grid">
+          ${page.content.map(item=>
+            renderContentCard(item)
+          ).join("")}
+        </div>
+      `
+      :
+      page.children.length===0
+      ? `<div class="empty" style="margin-top:25px">
+           Wax content ah wali kuma jiro.
+         </div>`
+      :""
+    }
+  `;
+}
+
+function renderContentCard(item){
+
+  if(item.type==="image"){
+
+    return `
+      <div class="card">
+        <img
+          class="media-img"
+          src="${item.url}"
+          alt="${escapeHTML(item.title)}">
+
+        <div class="card-body">
+          <h3>${escapeHTML(item.title)}</h3>
+          <small>Sawir</small>
+        </div>
+      </div>
+    `;
+  }
+
+  if(item.type==="video"){
+
+    return `
+      <div class="card">
+
+        <video
+          controls
+          preload="metadata"
+          src="${item.url}">
+        </video>
+
+        <div class="card-body">
+          <h3>${escapeHTML(item.title)}</h3>
+          <small>Video</small>
+        </div>
+
+      </div>
+    `;
+  }
+
+  if(item.type==="audio"){
+
+    return `
+      <div class="card">
+
+        <div class="poster">🎵</div>
+
+        <div class="card-body">
+          <h3>${escapeHTML(item.title)}</h3>
+
+          <audio controls src="${item.url}">
+          </audio>
+        </div>
+
+      </div>
+    `;
+  }
+
+  if(item.type==="embed"){
+
+    const embed=getEmbedURL(item.url);
+
+    return `
+      <div class="card">
+
+        ${
+          embed
+          ? `<iframe
+               src="${embed}"
+               allow="autoplay; encrypted-media; picture-in-picture"
+               allowfullscreen>
+             </iframe>`
+          :
+          `<div class="poster">🔗</div>`
+        }
+
+        <div class="card-body">
+
+          <h3>${escapeHTML(item.title)}</h3>
+
+          ${
+            !embed
+            ? `<a
+                href="${escapeAttribute(item.url)}"
+                target="_blank"
+                rel="noopener noreferrer"
+                style="color:#e73535">
+                Fur Link-ga
+               </a>`
+            :""
+          }
+
+        </div>
+
+      </div>
+    `;
+  }
+
+  return "";
+}
+
+/* ======================
+   EMBED CONVERTER
+====================== */
+
+function getEmbedURL(url){
+
+  if(!url) return "";
+
+  try{
+
+    const u=new URL(url);
+
+    /* YouTube */
+
+    if(
+      u.hostname.includes("youtube.com")
+    ){
+
+      if(u.pathname.startsWith("/embed/"))
+        return url;
+
+      if(u.pathname.startsWith("/shorts/")){
+
+        const id=u.pathname.split("/")[2];
+
+        return "https://www.youtube.com/embed/"+id;
+      }
+
+      const id=u.searchParams.get("v");
+
+      if(id)
+        return "https://www.youtube.com/embed/"+id;
+    }
+
+    if(u.hostname==="youtu.be"){
+
+      const id=u.pathname.substring(1);
+
+      return "https://www.youtube.com/embed/"+id;
+    }
+
+    /* Vimeo */
+
+    if(u.hostname.includes("vimeo.com")){
+
+      const parts=u.pathname
+        .split("/")
+        .filter(Boolean);
+
+      const id=parts.find(x=>/^\d+$/.test(x));
+
+      if(id)
+        return "https://player.vimeo.com/video/"+id;
+    }
+
+    /* Google Drive */
+
+    if(u.hostname.includes("drive.google.com")){
+
+      const match=url.match(
+        /\/file\/d\/([^/]+)/
+      );
+
+      if(match)
+        return "https://drive.google.com/file/d/"
+          +match[1]+"/preview";
+    }
+
+    /* Direct video */
+
+    if(
+      /\.(mp4|webm|ogg|mov)(\?.*)?$/i.test(url)
+    ){
+      return url;
+    }
+
+    /*
+      Generic website embed.
+      Website-ka ayaa diidi kara iframe.
+    */
+
+    return url;
+
+  }catch(e){
+
+    return "";
+  }
+}
+
+/* ======================
+   ADMIN
+====================== */
+
+let selectedAdmin="home";
+let adminMode="page";
+
+function openAdmin(){
+
+  renderAdmin(selectedAdmin);
+}
+
+function renderAdmin(id){
+
+  selectedAdmin=id;
+
+  const page=findPage(id);
+
+  if(!page) return;
+
+  const parent=findParent(id);
+
+  document.getElementById("app").innerHTML=`
+
+    <div class="admin">
+
+      <aside class="sidebar">
+
+        <h3>Pages</h3>
+
+        ${Object.values(db)
+          .map(p=>`
+            <button
+              class="page-btn ${
+                selectedAdmin===p.id
+                ?"active":""
+              }"
+              onclick="renderAdmin('${p.id}')">
+
+              📁 ${escapeHTML(p.name)}
+
+            </button>
+          `).join("")}
+
+      </aside>
+
+      <section class="workspace">
+
+        ${
+          parent
+          ? `
+            <button
+              class="back"
+              onclick="renderAdmin('${parent.id}')">
+
+              ← Ku noqo ${escapeHTML(parent.name)}
+
+            </button>
+          `
+          :""
+        }
+
+        <h2 class="admin-title">
+          ⚙️ ${escapeHTML(page.name)}
+        </h2>
+
+        <div class="tabs">
+
+          <button
+            class="${adminMode==="page"?"active":""}"
+            onclick="setAdminMode('page','${page.id}')">
+
+            📁 Sub-page
+
+          </button>
+
+          <button
+            class="${adminMode==="embed"?"active":""}"
+            onclick="setAdminMode('embed','${page.id}')">
+
+            🔗 Embed
+
+          </button>
+
+          <button
+            class="${adminMode==="upload"?"active":""}"
+            onclick="setAdminMode('upload','${page.id}')">
+
+            ⬆️ Upload
+
+          </button>
+
+        </div>
+
+        ${renderAdminForm(page)}
+
+        <h3 style="margin-bottom:12px">
+          Sub-pages
+        </h3>
+
+        ${
+          page.children.length
+          ? page.children.map(child=>`
+
+              <div class="item">
+
+                <div class="item-info">
+                  <span>📁</span>
+                  <strong>
+                    ${escapeHTML(child.name)}
+                  </strong>
+                </div>
+
+                <div class="actions">
+
+                  <button
+                    onclick="renderAdmin('${child.id}')">
+                    Fur & Maamul
+                  </button>
+
+                  <button
+                    onclick="renamePage('${child.id}')">
+                    Magac beddel
+                  </button>
+
+                  <button
+                    class="delete"
+                    onclick="deletePage('${child.id}')">
+                    Tirtir
+                  </button>
+
+                </div>
+
+              </div>
+
+            `).join("")
+          :
+          `<div class="empty">
+             Sub-page wali ma jiro.
+           </div>`
+        }
+
+        <h3 style="margin:25px 0 12px">
+          Media & Embed
+        </h3>
+
+        ${
+          page.content.length
+          ? page.content.map(item=>`
+
+              <div class="item">
+
+                <div class="item-info">
+
+                  <span>
+                    ${contentIcon(item.type)}
+                  </span>
+
+                  <strong>
+                    ${escapeHTML(item.title)}
+                  </strong>
+
+                </div>
+
+                <div class="actions">
+
+                  <button
+                    onclick="previewItem('${page.id}','${item.id}')">
+                    Eeg
+                  </button>
+
+                  <button
+                    class="delete"
+                    onclick="deleteContent('${page.id}','${item.id}')">
+                    Tirtir
+                  </button>
+
+                </div>
+
+              </div>
+
+            `).join("")
+          :
+          `<div class="empty">
+             Media ama embed wali ma jiro.
+           </div>`
+        }
+
+      </section>
+
+    </div>
+  `;
+}
+
+function setAdminMode(mode,pageId){
+
+  adminMode=mode;
+
+  renderAdmin(pageId);
+}
+
+function renderAdminForm(page){
+
+  if(adminMode==="page"){
+
+    return `
+      <div class="form">
+
+        <strong>Sub-page cusub</strong>
+
+        <input
+          id="newPageName"
+          placeholder="Magaca sub-page">
+
+        <button
+          class="primary"
+          onclick="addSubPage('${page.id}')">
+
+          + Ku dar Sub-page
+
+        </button>
+
+      </div>
+    `;
+  }
+
+  if(adminMode==="embed"){
+
+    return `
+      <div class="form">
+
+        <strong>Embed / Link</strong>
+
+        <input
+          id="embedTitle"
+          placeholder="Magaca video/content">
+
+        <input
+          id="embedURL"
+          placeholder="https://youtube.com/...">
+
+        <button
+          class="primary"
+          onclick="addEmbed('${page.id}')">
+
+          🔗 Ku dar Embed
+
+        </button>
+
+        <small style="color:#777">
+          YouTube, Vimeo, Google Drive,
+          direct video ama website link.
+        </small>
+
+      </div>
+    `;
+  }
+
+  return `
+    <div class="form">
+
+      <strong>Upload Media</strong>
+
+      <input
+        id="uploadTitle"
+        placeholder="Magaca media">
+
+      <label class="upload-label">
+
+        ⬆️ Dooro Sawir / Video / Audio
+
+        <input
+          type="file"
+          id="mediaFile"
+          accept="image/*,video/*,audio/*">
+
+      </label>
+
+      <button
+        class="primary"
+        onclick="uploadMedia('${page.id}')">
+
+        Upload
+
+      </button>
+
+      <small style="color:#777">
+        Tijaabadan files-ku browser-ka ayay ku kaydsanayaan.
+        Ha isticmaalin video aad u weyn.
+      </small>
+
+    </div>
+  `;
+}
+
+/* ======================
+   SUB PAGE
+====================== */
+
+function addSubPage(parentId){
+
+  const input=
+    document.getElementById("newPageName");
+
+  const name=input.value.trim();
+
+  if(!name){
+
+    alert("Geli magaca sub-page.");
+
+    return;
+  }
+
+  const parent=findPage(parentId);
+
+  parent.children.push({
+
+    id:"page_"+Date.now(),
+
+    name,
+
+    children:[],
+
+    content:[]
+
+  });
+
+  save();
+
+  renderAdmin(parentId);
+}
+
+function renamePage(id){
+
+  const page=findPage(id);
+
+  const name=prompt(
+    "Magaca cusub:",
+    page.name
+  );
+
+  if(!name) return;
+
+  page.name=name.trim();
+
+  save();
+
+  const parent=findParent(id);
+
+  renderAdmin(
+    parent ? parent.id : id
+  );
+}
+
+function deletePage(id){
+
+  const page=findPage(id);
+
+  if(!page) return;
+
+  if(
+    !confirm(
+      "Ma tirtiraysaa "+page.name+"?"
+    )
+  ) return;
+
+  const parent=findParent(id);
+
+  if(!parent){
+
+    alert(
+      "Main page lama tirtiri karo."
+    );
+
+    return;
+  }
+
+  parent.children=
+    parent.children.filter(
+      x=>x.id!==id
+    );
+
+  save();
+
+  renderAdmin(parent.id);
+}
+
+/* ======================
+   EMBED
+====================== */
+
+function addEmbed(pageId){
+
+  const title=
+    document.getElementById(
+      "embedTitle"
+    ).value.trim();
+
+  const url=
+    document.getElementById(
+      "embedURL"
+    ).value.trim();
+
+  if(!title || !url){
+
+    alert(
+      "Geli magaca iyo link-ga."
+    );
+
+    return;
+  }
+
+  try{
+    new URL(url);
+  }catch(e){
+
+    alert(
+      "Link sax ah geli."
+    );
+
+    return;
+  }
+
+  const page=findPage(pageId);
+
+  page.content.push({
+
+    id:"content_"+Date.now(),
+
+    title,
+
+    type:"embed",
+
+    url
+
+  });
+
+  save();
+
+  renderAdmin(pageId);
+}
+
+/* ======================
+   UPLOAD
+====================== */
+
+function uploadMedia(pageId){
+
+  const title=
+    document.getElementById(
+      "uploadTitle"
+    ).value.trim();
+
+  const fileInput=
+    document.getElementById(
+      "mediaFile"
+    );
+
+  const file=fileInput.files[0];
+
+  if(!title || !file){
+
+    alert(
+      "Geli magaca kadibna dooro file."
+    );
+
+    return;
+  }
+
+  /*
+    localStorage aad ayuu u yar yahay.
+    Waxaan xadidnay demo upload.
+  */
+
+  if(file.size > 3 * 1024 * 1024){
+
+    alert(
+      "File-kan demo-ga aad ayuu ugu weyn yahay. "+
+      "Isticmaal file ka yar 3MB ama Embed Link."
+    );
+
+    return;
+  }
+
+  let type="";
+
+  if(file.type.startsWith("image/"))
+    type="image";
+
+  else if(file.type.startsWith("video/"))
+    type="video";
+
+  else if(file.type.startsWith("audio/"))
+    type="audio";
+
+  else{
+
+    alert(
+      "Kaliya sawir, video ama audio."
+    );
+
+    return;
+  }
+
+  const reader=new FileReader();
+
+  reader.onload=function(){
+
+    const page=findPage(pageId);
+
+    page.content.push({
+
+      id:"content_"+Date.now(),
+
+      title,
+
+      type,
+
+      url:reader.result
+
+    });
+
+    save();
+
+    renderAdmin(pageId);
+  };
+
+  reader.readAsDataURL(file);
+}
+
+/* ======================
+   DELETE CONTENT
+====================== */
+
+function deleteContent(pageId,itemId){
+
+  if(
+    !confirm(
+      "Ma tirtiraysaa content-kan?"
+    )
+  ) return;
+
+  const page=findPage(pageId);
+
+  page.content=
+    page.content.filter(
+      x=>x.id!==itemId
+    );
+
+  save();
+
+  renderAdmin(pageId);
+}
+
+/* ======================
+   PREVIEW
+====================== */
+
+function previewItem(pageId,itemId){
+
+  const page=findPage(pageId);
+
+  const item=
+    page.content.find(
+      x=>x.id===itemId
+    );
+
+  if(!item) return;
+
+  document.getElementById("app")
+  .innerHTML=`
+
+    <button
+      class="back"
+      onclick="renderAdmin('${pageId}')">
+
+      ← Ku noqo Maamulka
+
+    </button>
+
+    <h1>
+      ${escapeHTML(item.title)}
+    </h1>
+
+    <div style="
+      max-width:850px;
+      margin-top:20px;
+    ">
+
+      ${renderPreview(item)}
+
+    </div>
+  `;
+}
+
+function renderPreview(item){
+
+  if(item.type==="image"){
+
+    return `
+      <img
+        src="${item.url}"
+        style="
+          width:100%;
+          border-radius:10px;
+        ">
+    `;
+  }
+
+  if(item.type==="video"){
+
+    return `
+      <video
+        src="${item.url}"
+        controls
+        style="width:100%">
+      </video>
+    `;
+  }
+
+  if(item.type==="audio"){
+
+    return `
+      <audio
+        src="${item.url}"
+        controls
+        style="width:100%">
+      </audio>
+    `;
+  }
+
+  const embed=getEmbedURL(item.url);
+
+  if(embed){
+
+    return `
+      <iframe
+        src="${embed}"
+        style="
+          width:100%;
+          aspect-ratio:16/9;
+          border:0;
+        "
+        allowfullscreen>
+      </iframe>
+
+      <p style="
+        color:#777;
+        margin-top:10px;
+      ">
+        Haddii website-ku diido embed,
+        link-ga dibadda ka fur.
+      </p>
+
+      <a
+        href="${escapeAttribute(item.url)}"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="color:#e73535">
+
+        Fur Link-ga
+
+      </a>
+    `;
+  }
+
+  return "";
+}
+
+function contentIcon(type){
+
+  if(type==="image") return "🖼️";
+  if(type==="video") return "🎬";
+  if(type==="audio") return "🎵";
+
+  return "🔗";
+}
+
+/* ======================
+   SECURITY HELPERS
+====================== */
+
+function escapeHTML(text){
+
+  const div=
+    document.createElement("div");
+
+  div.textContent=
+    String(text || "");
+
+  return div.innerHTML;
+}
+
+function escapeAttribute(text){
+
+  return String(text || "")
+    .replace(/&/g,"&amp;")
+    .replace(/"/g,"&quot;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;");
+}
+
+/* ======================
+   START
+====================== */
+
+openPage("home");
+
+</script>
+
+</body>
+</html>
